@@ -1,0 +1,105 @@
+.not-suspended {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  width: 100%;
+  min-height: 100vh;
+
+  background: #f1f1f1;
+}
+
+.suspended {
+  display: flex;
+  align-items: center;
+  padding-top: 100px;
+  flex-direction: column;
+
+  width: 100%;
+  min-height: 100vh;
+
+  background: #f1f1f1;
+}
+
+#page-title {
+  font-family: "Ubuntu", sans-serif;
+  color: #383e45;
+  margin-bottom: 20px;
+}
+
+.main-btn h2 {
+  font-family: sans-serif;
+  font-weight: bold;
+  color: #fff;
+}
+
+.main-btn:hover {
+  background: #000;
+}
+
+.main-btn {
+  width: 500px;
+  height: 90px;
+  background: #e5322d;
+
+  border-radius: 15px;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+#start {
+  display: none;
+}
+
+#file-status {
+  color: rgb(92, 92, 92);
+  font-family: sans-serif;
+  margin-top: 10px;
+}
+
+#select-other-file {
+  margin-top: 15px;
+  cursor: pointer;
+  color: #383e45;
+  font-weight: bold;
+  font-family: "Ubuntu", sans-serif;
+  display: none;
+}
+
+#error-list-container {
+  margin-top: 50px;
+
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+
+  display: none;
+}
+
+#error-list-container h2 {
+  color: rgb(92, 92, 92);
+  font-family: "Ubuntu", sans-serif;
+  margin-bottom: 10px;
+}
+
+#error-list-container ul {
+  margin-left: 15px;
+}
+
+#error-list-container ul li {
+  list-style: none;
+  padding: 5px 5px;
+  border-left: 3px solid #e5322d;
+  margin-bottom: 7px;
+}
+
+#error-list-container ul li h3 {
+  font-family: "Roboto", sans-serif;
+}

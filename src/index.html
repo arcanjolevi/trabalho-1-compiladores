@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Roboto:wght@400;700&family=Ubuntu:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Analisador léxico</title>
+    <link rel="stylesheet" href="./styles/global.css" />
+    <link rel="stylesheet" href="./styles/index.css" />
+  </head>
+  <body>
+    <main id="main" class="not-suspended">
+      <h1 id="page-title">Analisador léxico</h1>
+      <button id="select-file-btn" class="main-btn">
+        <h2>Selecionar arquivo</h2>
+        <input type="file" id="file-selector" hidden />
+      </button>
+
+      <button id="start" class="main-btn">
+        <h2>Fazer análise léxica</h2>
+        <input type="file" id="file-selector" hidden />
+      </button>
+      <p id="file-status">Nenhum arquivo selecionado</p>
+      <strong id="select-other-file">selecionar outro arquivo</strong>
+
+      <div id="error-list-container">
+        <h2 id="error-list-title">Erros léxicos encontrados:</h2>
+        <ul id="error-list"></ul>
+      </div>
+    </main>
+    <script src="scripts/main.js" type="module"></script>
+  </body>
+</html>

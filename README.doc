@@ -1,0 +1,33 @@
+README.doc - Descrição do trabalho
+
+Nome do software: compi
+Nome do integrante: Levi Cicero Arcanjo
+Descrição da linguagem:
+  - Subconjunto de C
+  - Classes de Tokens:
+    01 - "int"    -> ^[i][n][t]$
+    02 - "char"   -> ^[c][h][a][r]$
+    03 - "float"  -> ^[f][l][o][a][t]$
+    04 - "void"   -> ^[v][o][i][d]$
+    05 - "("      -> ^[(]$
+    06 - ")"      -> ^[)]$
+    07 - "{"      -> ^[{]$
+    08 - "}"      -> ^[}]$
+    09 - "if"     -> ^[i][f]$
+    10 - "else"   -> ^[e][l][s][e]$
+    11 - "while"  -> ^[w][h][i][l][e]$
+    12 - "+"      -> ^[+]$
+    13 - "-"      -> ^[-]$
+    14 - "*"      -> ^[*]$
+    15 - "/"      -> ^[/]$
+    16 - ";"      -> ^[;]$
+    17 - ","      -> ^[;]$
+    18 - "="      -> ^[=]$
+    19 - "abc"    -> ^[_][_a-z0-9]+|[a-z]+[_a-z0-9]+$
+    20 - "123"    -> ^[0-9]+$
+    21 - "0.232"  -> ^[0-9]+[.][0-9]+$
+    22 - "main"   -> ^[m][a][i][n]$
+    22 - "return" -> ^[r][e][t][u][r][n]$
+
+
+    
