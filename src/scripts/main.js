@@ -5,7 +5,11 @@ import {
   selectOtherFileBtn,
   startBtn,
 } from "./objects.js";
-import { separateTokens, lexicalAnalysis } from "./lexical.js";
+import {
+  separateTokens,
+  lexicalAnalysis,
+  describeLexicalError,
+} from "./lexical.js";
 import {
   ShowErrorsList,
   toggleAcceptOtherFiles,
@@ -18,6 +22,9 @@ import { readFile } from "./file.js";
 
 var tokens = [];
 
+/**
+ * Determinação de ações quando o file selector for ativado
+ */
 fileSelector.addEventListener("change", (event) => {
   const fileList = event.target.files;
 
@@ -30,10 +37,16 @@ fileSelector.addEventListener("change", (event) => {
   }
 });
 
+/**
+ * Determinação de ações quando o fileBtn for ativado
+ */
 fileBtn.addEventListener("click", (evt) => {
   fileSelector.click();
 });
 
+/**
+ * Determinação de ações quando o botão selectOtherFile for ativado
+ */
 selectOtherFileBtn.addEventListener("click", (evt) => {
   fileSelector.click();
   toggleAcceptOtherFiles();
@@ -43,6 +56,9 @@ selectOtherFileBtn.addEventListener("click", (evt) => {
   fileStatus.innerHTML = "Nenhum arquivo selecionado";
 });
 
+/**
+ * Determinação de ações quando o botão de fazer análise Lexica for ativado
+ */
 startBtn.addEventListener("click", (evt) => {
   suspendMain(true);
   clearLexicalErros();
@@ -51,6 +67,10 @@ startBtn.addEventListener("click", (evt) => {
 
   ShowErrorsList(true);
   for (let i = 0; i < errors.length; i++) {
-    addLexicalError(errors[i].line, errors[i].token, "description");
+    addLexicalError(
+      errors[i].line,
+      errors[i].token,
+      describeLexicalError(errors[i].token)
+    );
   }
 });

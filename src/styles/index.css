@@ -1,3 +1,7 @@
+main {
+  padding-bottom: 100px;
+}
+
 .not-suspended {
   display: flex;
   align-items: center;
@@ -13,7 +17,7 @@
 .suspended {
   display: flex;
   align-items: center;
-  padding-top: 100px;
+  padding-top: 50px;
   flex-direction: column;
 
   width: 100%;
@@ -100,6 +104,16 @@
   margin-bottom: 7px;
 }
 
+#error-list-container ul li:hover {
+  margin-left: 15px;
+}
+
 #error-list-container ul li h3 {
   font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  color: rgb(48, 48, 48);
+}
+
+#error-list-container ul li p {
+  font-size: 15px;
 }

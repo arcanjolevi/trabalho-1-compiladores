@@ -1,0 +1,107 @@
+README.doc - Descrição do trabalho
+
+Nome do software: compilador
+
+Nome do integrante: Levi Cicero Arcanjo
+
+Descrição da linguagem:
+  - Subconjunto de C, incluido declaração de variáveis int, char, float e double. Permitindo
+  o uso dos operadores de soma, multiplicação subtração, divisão, operadores lógicos (and, or e comparação), comandos
+  condicionais (if e else) e loops (while e for) .
+  -Nomes variáveis podendo iniciar com qualquer letra de a-z ou _ seguidas por qualquer letra
+  de a-z, _ e numeros.
+  - Palavras reservadas são: int, char, float, double, void, if, else, while, main, return e for
+
+Classes de Tokens:
+Palavra int                 -> Expressão regular correspondente: ^[i][n][t]$
+Palavra char                -> Expressão regular correspondente: ^[c][h][a][r]$
+Palavra float               -> Expressão regular correspondente: ^[f][l][o][a][t]$
+Palavra void                -> Expressão regular correspondente: ^[v][o][i][d]$
+Palavra if                  -> Expressão regular correspondente: ^[i][f]$
+Palavra else                -> Expressão regular correspondente: ^[e][l][s][e]$
+Palavra while               -> Expressão regular correspondente: ^[w][h][i][l][e]$
+Palavra main                -> Expressão regular correspondente: ^[m][a][i][n]$
+Palavra return              -> Expressão regular correspondente: ^[r][e][t][u][r][n]$
+Palavra for                 -> Expressão regular correspondente: ^[f][o][r]$
+simbolo abre parênteses     -> Expressão regular correspondente: ^[(]$
+Símbolo fecha parênteses    -> Expressão regular correspondente: ^[)]$
+Símbolo abre chaves         -> Expressão regular correspondente: ^[{]$
+Símbolo fecha chaves        -> Expressão regular correspondente: ^[}]$
+Símbolo de soma             -> Expressão regular correspondente: ^[+]$
+Símbolo de subtração        -> Expressão regular correspondente: ^[-]$
+Símbolo de multiplicação    -> Expressão regular correspondente: ^[*]$
+Simbolo de divisão          -> Expressão regular correspondente: ^[/]$
+Símbolo ponto e vígula      -> Expressão regular correspondente: ^[;]$
+Símbolo de atribuição       -> Expressão regular correspondente: ^[=]$
+Simbolo and                 -> Expressão regular correspondente: ^[&]$
+Simbolo ou                  -> Expressão regular correspondente: ^[|]$
+Simbolo maior               -> Expressão regular correspondente: ^[>]$
+Símbolo menor               -> Expressão regular correspondente: ^[<]$
+Símbolo abre colchetes      -> Expressão regular correspondente: ^[[]$
+Símbolo fecha colchetes     -> Expressão regular correspondente: ^[\]]$
+Caracter                    -> Expressão regular correspondente: ^['].[']$
+String                      -> Expressão regular correspondente: ^["].*["]$
+Número                      -> Expressão regular correspondente: ^[0-9]+$
+Número decimal              -> Expressão regular correspondente: ^[0-9]+[.][0-9]+$
+identificador               -> Expressão regular correspondente: ^[_a-z][_a-z0-9]*$
+  
+  
+  
+Descrição do funcionamento do software:
+  - Funciona no navegador
+  - Abrir o index.html com o navegador
+  - Selecionar o arquivo clicando no botão "selecionar arquivo"
+  - Clicar no botão "Fazer análise léxica" para inciar a análise
+  - Caso existam erros, serão mostrados na tela
+
+Descrição do tratamento de erros:
+  - Neste analizador os erros são identificados através de expressões regulares,
+  logo após ser constatado que o token está mal escrito é chamado um método denominado
+  describeLexicalError() que determina qual tipo de erro o token apresenta.
+  - Este analisador reconhece os seguitnes erros expecificamente:
+    - Identificador mal formado -> Quando um identificador inicia com numeros
+    - Número mal formado-> Quando existe um numero com letras e pontos
+    - Caracter mal formado -> Quando um caracter possui tamanho maior que um ou aspas simples a menos
+    - String mal formada -> Quando possui aspas duplas a menos
+    - Símbolo desconhecido -> Quando o simbolo apresentado não faz parte da linguagem
+  
+
+Descrição do processo de construção:
+  - Não é necessário nehum tipo de processo de build
+  - Apenas é necessário ter instalado um navegador web
+
+
+
+Referências usadas:
+  - https://www.w3schools.com/
+  - https://developer.mozilla.org/
+  - https://javascript.info/
+  - https://pt.stackoverflow.com/
+  - Slides de compiladores (Aula 0, 1 e 2)
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+    

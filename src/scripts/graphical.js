@@ -8,20 +8,31 @@ import {
   errorListTitle,
 } from "./objects.js";
 
+/**
+ * Função que muda o título da lista de erros na tela
+ * @param {string} text - Será utlizado como novo título
+ */
 export function changeErrorsListTitle(text) {
   errorListTitle.innerText = text;
 }
 
+/**
+ * Função que suspende o conteúdo na tela
+ * @param {boolean} condition - Determina se o conteúdo estará suspenso ou não suspenso
+ */
 export function suspendMain(condition) {
-  if (mainDiv.classList.contains(condition)) {
-    mainDiv.classList.remove("not-suspended");
+  mainDiv.classList.remove("not-suspended");
+  mainDiv.classList.remove("suspended");
+  if (condition) {
     mainDiv.classList.add("suspended");
   } else {
-    mainDiv.classList.remove("suspended");
     mainDiv.classList.add("not-suspended");
   }
 }
 
+/**
+ * Funcção que habilita ao usuários entrar com outro arquivo na interface
+ */
 export function toggleAcceptOtherFiles() {
   if (
     !selectOtherFileBtn.style.display ||
@@ -37,12 +48,21 @@ export function toggleAcceptOtherFiles() {
   }
 }
 
+/**
+ * Função que adiciona um erro léxico na tela
+ * @param {string} line - Linha na qual o Erro ocorreu
+ * @param {string} text - Token
+ * @param {string} description - Descrição do erro
+ */
 export function addLexicalError(line, text, description) {
   var newElement = document.createElement("li");
-  newElement.innerHTML = `<h3>Erro linha ${line}: "${text}"</h3><p>${description}</p>`;
+  newElement.innerHTML = `<h3>Erro na linha ${line}: "  ${text}  "</h3><p>${description}</p>`;
   errorList.appendChild(newElement);
 }
 
+/**
+ * Função que limpa todos os erros léxicos na tela
+ */
 export function clearLexicalErros() {
   var first = errorList.firstElementChild;
   while (first) {
@@ -51,6 +71,10 @@ export function clearLexicalErros() {
   }
 }
 
+/**
+ * Função que mostra ou oculta a lista de erros na tela
+ * @param {boolean} condition - Determina se a lista aparece ou não na tela
+ */
 export function ShowErrorsList(condition) {
   if (condition) {
     errorListContainer.style.display = "block";

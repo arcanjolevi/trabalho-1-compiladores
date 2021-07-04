@@ -1,9 +1,15 @@
 int main {
   int a;
   int b;
+  char a ='a';
+  int vet[123];
 
   if (1 > 2) {
     a = b;
+  }
+
+  for(a = 0; a < b; a++){
+    vet[a] = 1;
   }
 
   while(2 > 3){
