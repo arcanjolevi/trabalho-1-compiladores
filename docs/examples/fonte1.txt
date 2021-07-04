@@ -1,19 +1,21 @@
 int main {
-  int a=7.7.7;
-  int 787variavavel;
-  int dfasd#f;
-  int assssssssssssssssssssssssssssssssssssssassaasasasa;
-  float x = 0.23123a;
-  char text[3] = aaa";
-  char val = 'ca';
-  while(2>=3 *&& 2 == 3){
-    b = a + 1;@
+  int x;
+  int y;
+  char a = 'a';
+  int vet[123];
+
+  if (1 > 2) {
+    x = y;
   }
-  .
 
-  #
+  for(x = 0; x < y; x++){
+    vet[y] = 1;
+  }
 
-  $
+  while(2 > 3){
+    x = y + 1;
+  }
 
   return 0;
 }
+

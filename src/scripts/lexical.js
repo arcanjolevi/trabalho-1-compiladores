@@ -49,7 +49,7 @@ const erTest = [
  * @param {string} text
  * @returns {array} - Vetor com todos os tokens encontrados
  */
-export function separateTokens(text) {
+function separateTokens(text) {
   let lines = text.split("\n");
   let vetor = [];
 
@@ -112,7 +112,7 @@ export function separateTokens(text) {
  * @param {token} _tokens
  * @returns
  */
-export function lexicalAnalysis(_tokens) {
+function lexicalAnalysis(_tokens) {
   var lexicalErrors = [];
   var simbolsTable = [];
   for (let i = 0; i < _tokens.length; i++) {
@@ -138,11 +138,11 @@ export function lexicalAnalysis(_tokens) {
  * @param {string} token - Palavra a ser analisada
  * @returns {string} - Descrição do possivel erro léxico
  */
-export function describeLexicalError(token) {
+function describeLexicalError(token) {
   if (erTest[0].test(token)) {
     return "Identificador mal formatado";
   } else if (erTest[1].test(token)) {
-    return "Número mal formatado";
+    return "Número mal formado";
   } else if (erTest[2].test(token)) {
     return "Caracter mal formado";
   } else if (erTest[3].test(token)) {

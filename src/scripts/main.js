@@ -1,25 +1,3 @@
-import {
-  fileSelector,
-  fileStatus,
-  fileBtn,
-  selectOtherFileBtn,
-  startBtn,
-} from "./objects.js";
-import {
-  separateTokens,
-  lexicalAnalysis,
-  describeLexicalError,
-} from "./lexical.js";
-import {
-  ShowErrorsList,
-  toggleAcceptOtherFiles,
-  suspendMain,
-  changeErrorsListTitle,
-  addLexicalError,
-  clearLexicalErros,
-} from "./graphical.js";
-import { readFile } from "./file.js";
-
 var tokens = [];
 
 /**

@@ -1,18 +1,8 @@
-import {
-  mainDiv,
-  selectOtherFileBtn,
-  errorList,
-  errorListContainer,
-  fileBtn,
-  startBtn,
-  errorListTitle,
-} from "./objects.js";
-
 /**
  * Função que muda o título da lista de erros na tela
  * @param {string} text - Será utlizado como novo título
  */
-export function changeErrorsListTitle(text) {
+function changeErrorsListTitle(text) {
   errorListTitle.innerText = text;
 }
 
@@ -20,7 +10,7 @@ export function changeErrorsListTitle(text) {
  * Função que suspende o conteúdo na tela
  * @param {boolean} condition - Determina se o conteúdo estará suspenso ou não suspenso
  */
-export function suspendMain(condition) {
+function suspendMain(condition) {
   mainDiv.classList.remove("not-suspended");
   mainDiv.classList.remove("suspended");
   if (condition) {
@@ -31,9 +21,9 @@ export function suspendMain(condition) {
 }
 
 /**
- * Funcção que habilita ao usuários entrar com outro arquivo na interface
+ * Função que habilita ao usuários entrar com outro arquivo na interface
  */
-export function toggleAcceptOtherFiles() {
+function toggleAcceptOtherFiles() {
   if (
     !selectOtherFileBtn.style.display ||
     selectOtherFileBtn.style.display == "none"
@@ -54,7 +44,7 @@ export function toggleAcceptOtherFiles() {
  * @param {string} text - Token
  * @param {string} description - Descrição do erro
  */
-export function addLexicalError(line, text, description) {
+function addLexicalError(line, text, description) {
   var newElement = document.createElement("li");
   newElement.innerHTML = `<h3>Erro na linha ${line}: "  ${text}  "</h3><p>${description}</p>`;
   errorList.appendChild(newElement);
@@ -63,7 +53,7 @@ export function addLexicalError(line, text, description) {
 /**
  * Função que limpa todos os erros léxicos na tela
  */
-export function clearLexicalErros() {
+function clearLexicalErros() {
   var first = errorList.firstElementChild;
   while (first) {
     first.remove();
@@ -75,7 +65,7 @@ export function clearLexicalErros() {
  * Função que mostra ou oculta a lista de erros na tela
  * @param {boolean} condition - Determina se a lista aparece ou não na tela
  */
-export function ShowErrorsList(condition) {
+function ShowErrorsList(condition) {
   if (condition) {
     errorListContainer.style.display = "block";
   } else {
