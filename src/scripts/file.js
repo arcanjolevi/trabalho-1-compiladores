@@ -10,3 +10,15 @@ function readFile(file, callback) {
     callback(evt.target.result);
   };
 }
+
+/**
+ * Função que guarda um arquivo na máquina
+ * @param {string} fileName
+ * @param {string} text
+ */
+function writeFile(fileName, text) {
+  var blob = new Blob([text], {
+    type: "text/plain;charset=utf-8",
+  });
+  saveAs(blob, fileName);
+}

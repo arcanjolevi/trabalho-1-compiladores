@@ -1,49 +1,48 @@
 /**
  * Definição das classes de token da linguagem
  */
-const regularExpressions = [
-  /^[i][n][t]$/,
-  /^[c][h][a][r]$/,
-  /^[f][l][o][a][t]$/,
-  /^[v][o][i][d]$/,
-  /^[i][f]$/,
-  /^[e][l][s][e]$/,
-  /^[w][h][i][l][e]$/,
-  /^[m][a][i][n]$/,
-  /^[r][e][t][u][r][n]$/,
-  /^[f][o][r]$/,
-  /^[(]$/,
-  /^[)]$/,
-  /^[{]$/,
-  /^[}]$/,
-  /^[+]$/,
-  /^[-]$/,
-  /^[*]$/,
-  /^[/]$/,
-  /^[;]$/,
-  /^[=]$/,
-  /^[&]$/,
-  /^[>]$/,
-  /^[<]$/,
-  /^[[]$/,
-  /^[\]]$/,
-  /^['].[']$/,
-  /^["].*["]$/,
-  /^[0-9]+$/,
-  /^[0-9]+[.][0-9]+$/,
-  /^[_a-z][_a-z0-9]*$/,
+const tokenClasses = [
+  { re: /^[i][n][t]$/, tokenClass: "int" },
+  { re: /^[c][h][a][r]$/, tokenClass: "char" },
+  { re: /^[f][l][o][a][t]$/, tokenClass: "float" },
+  { re: /^[v][o][i][d]$/, tokenClass: "void" },
+  { re: /^[i][f]$/, tokenClass: "if" },
+  { re: /^[e][l][s][e]$/, tokenClass: "else" },
+  { re: /^[w][h][i][l][e]$/, tokenClass: "while" },
+  { re: /^[r][e][t][u][r][n]$/, tokenClass: "return" },
+  { re: /^[f][o][r]$/, tokenClass: "for" },
+  { re: /^[(]$/, tokenClass: "openParentheses" },
+  { re: /^[)]$/, tokenClass: "closeParentheses" },
+  { re: /^[{]$/, tokenClass: "openBrace" },
+  { re: /^[}]$/, tokenClass: "closeBrace" },
+  { re: /^[+]$/, tokenClass: "plus" },
+  { re: /^[-]$/, tokenClass: "minus" },
+  { re: /^[*]$/, tokenClass: "multiply" },
+  { re: /^[/]$/, tokenClass: "div" },
+  { re: /^[;]$/, tokenClass: "semicolon" },
+  { re: /^[,]$/, tokenClass: "coma" },
+  { re: /^[=]$/, tokenClass: "equal" },
+  { re: /^[&]$/, tokenClass: "andBinary" },
+  { re: /^[>]$/, tokenClass: "greater" },
+  { re: /^[<]$/, tokenClass: "less" },
+  { re: /^[[]$/, tokenClass: "openBracket" },
+  { re: /^[\]]$/, tokenClass: "closeBracket" },
+  { re: /^['].[']$/, tokenClass: "character" },
+  { re: /^["].*["]$/, tokenClass: "string" },
+  { re: /^[0-9]+$/, tokenClass: "number" },
+  { re: /^[0-9]+[.][0-9]+$/, tokenClass: "decimal" },
+  { re: /^[_a-zA-Z][_a-zA-Z0-9]*$/, tokenClass: "id" },
 ];
 
 /**
  * Definição de alguns tipos de erros léxicos
  */
 const erTest = [
-  /*identificador mal formado*/ /^[0-9]+[a-z0-9]*$/,
-  /*numero mal formado*/ /^[0-9a-z]+[.]+[0-9a-z]+$/,
+  /*identificador mal formado*/ /^[0-9a-zA-Z.]+$/,
+  /*numero mal formado*/ /^[0-9.]*[.]+[0-9.]*$/,
   /*Caracter mal formada*/ /^[']+.*$|^.*[']+$/,
   /*String mal formada*/ /^["]+.*$|^.*["]+$/,
 ];
-
 /**
  * Função que separa tokens e armazena todos eles em um vetor
  * @param {string} text
@@ -76,7 +75,8 @@ function separateTokens(text) {
         text[i] === "[" ||
         text[i] === "]" ||
         text[i] === "\n" ||
-        text[i] === " "
+        text[i] === " " ||
+        text[i] === "\r"
       ) {
         if (buffer.length > 0) {
           vetor.push({
@@ -86,7 +86,7 @@ function separateTokens(text) {
           buffer = "";
         }
 
-        if (text[i] !== " " && text[i] !== "\n") {
+        if (text[i] !== " " && text[i] !== "\n" && text[i] !== "\r") {
           vetor.push({
             token: text[i],
             line: j + 1,
@@ -103,7 +103,7 @@ function separateTokens(text) {
       }
     }
   }
-  console.table(vetor);
+
   return vetor;
 }
 
@@ -118,8 +118,8 @@ function lexicalAnalysis(_tokens) {
   for (let i = 0; i < _tokens.length; i++) {
     var lexicalCorrect = false;
     let j;
-    for (j = 0; j < regularExpressions.length; j++) {
-      if (regularExpressions[j].test(_tokens[i].token)) {
+    for (j = 0; j < tokenClasses.length; j++) {
+      if (tokenClasses[j].re.test(_tokens[i].token)) {
         lexicalCorrect = true;
         break;
       }
@@ -127,10 +127,10 @@ function lexicalAnalysis(_tokens) {
     if (!lexicalCorrect || _tokens[i].token.length > 31) {
       lexicalErrors.push(_tokens[i]);
     } else {
-      _tokens[i].class = regularExpressions[j];
+      _tokens[i].tokenClass = tokenClasses[j].tokenClass;
     }
   }
-  return lexicalErrors;
+  return { lexicalErrors, tokenList: _tokens };
 }
 
 /**
@@ -139,16 +139,16 @@ function lexicalAnalysis(_tokens) {
  * @returns {string} - Descrição do possivel erro léxico
  */
 function describeLexicalError(token) {
-  if (erTest[0].test(token)) {
-    return "Identificador mal formatado";
+  if (token.length > 31) {
+    return "Tamanho excessivo";
   } else if (erTest[1].test(token)) {
     return "Número mal formado";
+  } else if (erTest[0].test(token)) {
+    return "Identificador mal formado";
   } else if (erTest[2].test(token)) {
     return "Caracter mal formado";
   } else if (erTest[3].test(token)) {
     return "String mal formada";
-  } else if (token.length > 31) {
-    return "Tamanho excessivo";
   } else {
     return "Símbolo desconhecido";
   }

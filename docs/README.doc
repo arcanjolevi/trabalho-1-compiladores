@@ -5,8 +5,8 @@ Nome do software: Compilador
 Nome do aluno: Levi Cicero Arcanjo
 
 Descrição da linguagem:
-    • Subconjunto de C, incluido declaração de variáveis int, char, float e double. Permitindo o uso dos operadores de soma, multiplicação subtração, divisão, operadores lógicos (and, or e comparação), comandos condicionais (if e else) e loops (while e for).
-    • Nomes variáveis podendo iniciar com qualquer letra de a-z ou underline seguidas por qualquer letra de a-z, underline e numeros.
+    • Subconjunto de C, incluido declaração de variáveis int, char, float. Permitindo o uso dos operadores de soma, multiplicação subtração, divisão, operadores lógicos maior e menor, comandos condicionais (if e else) e loops (while e for).
+    • Nomes variáveis podendo iniciar com qualquer letra de a-z, A-Z ou underline seguidas por qualquer letra de a-z, A-Z, underline e numeros.
     • Palavras reservadas são: int, char, float, double, void, if, else, while, main, return e for
 
 
@@ -30,6 +30,7 @@ Símbolo de subtração        -> Expressão regular: ^[-]$
 Símbolo de multiplicação    -> Expressão regular: ^[*]$
 Simbolo de divisão          -> Expressão regular: ^[/]$
 Símbolo ponto e vígula      -> Expressão regular: ^[;]$
+Simbolo de Virgula	        -> Expressao regular: ^[,]$
 Símbolo de atribuição       -> Expressão regular: ^[=]$
 Simbolo and                 -> Expressão regular: ^[&]$
 Simbolo ou                  -> Expressão regular: ^[|]$
@@ -49,12 +50,12 @@ Descrição do funcionamento do software:
   - Funciona no navegador
   - Abrir o index.html com o navegador
   - Selecionar o arquivo clicando no botão "selecionar arquivo"
-  - Clicar no botão "Fazer análise léxica" para inciar a análise
+  - Clicar no botão "Fazer análise" para inciar a análise
   - Caso existam erros, serão mostrados na tela
 
 Descrição do tratamento de erros:
-	- Neste analizador os erros são identificados através de expressões regulares, logo após ser constatado que o token está mal escrito é chamado um método denominado describeLexicalError() que determina qual tipo de erro o token apresenta.
-  - Este analisador reconhece os seguitnes erros expecificamente:
+	- Neste analizador os erros lexicos são identificados através de expressões regulares, logo após ser constatado que o token está mal escrito é chamado um método denominado describeLexicalError() que determina qual tipo de erro o token apresenta.
+  - Este analisador léxico reconhece os seguitnes erros expecificamente:
     - Identificador mal formado -> Quando um identificador inicia com numeros
     - Número mal formado-> Quando existe um numero com letras e pontos
     - Caracter mal formado -> Quando um caracter possui tamanho maior que um ou aspas simples a menos
@@ -66,14 +67,14 @@ Descrição do processo de construção:
   - Não é necessário nehum tipo de processo de build
   - Apenas é necessário ter instalado um navegador web
 
-
+Trechos de código associados a expressões regulares e as regras gramaticas estão anexadas como imagens na mesma pasta deste arquivo
 
 Referências usadas:
   - https://www.w3schools.com/
   - https://developer.mozilla.org/
   - https://javascript.info/
   - https://pt.stackoverflow.com/
-  - Slides de compiladores (Aula 0, 1 e 2)
+  - Slides de compiladores (Aula 0, 1 e 2, 3, 4, 5)
   
   
   

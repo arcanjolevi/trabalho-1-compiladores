@@ -1,0 +1,33 @@
+p(S) = {int, float, double, char, void}
+p(S0) = {[, =, int, float, double, char, void}
+p(EXPR) = {int, float, double, char, void, id, if, while, for, λ}
+p(E0) = {int, float, double, char, void, id, if, while, for}
+p(DECLARATION) = {int, float, double, char, void}
+p(TYPE) = {int, float, double, char, void}
+P(ATR) = {id}
+p(ID) = {id}
+p(IF) = {if}
+p(WHILE) = {while}
+p(FOR) = {for}
+p(DECLARATION') = {,,;}
+p(A9) = {,}
+p(A7) = {;}
+p(ATR') = {[, =}
+p(ATR'') = {=}
+p(A8) = {=}
+p(ATR''') = {id, numero, decimal, string, caracter}
+p(CALC) = {numero, decimal, string, caracter}
+p(A2) = {numero, decimal, string, caracter, id}
+p(VALUE) = {numero, decimal, string, caracter}
+p(FUNCTION) = {int, float, double, char, void}
+p(FUNCTION') = {(}
+p(F0) = {int, float, double, char, void}
+p(F1) = {,[, λ}
+p(F2) = {numero, λ}
+p(ELSE) = {else, λ}
+p(R0) = {id, λ}
+p(R1) = {,,λ}
+p(R2) = {numero, decimal, string, caracter, λ}
+p(A0) = {+,-,*,/,==, &&, <, >, λ}
+p(A1) = {+,-,*,/,==, &&, <, >}
+p(RETURN) = {return}

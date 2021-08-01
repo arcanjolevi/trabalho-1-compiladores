@@ -39,21 +39,21 @@ function toggleAcceptOtherFiles() {
 }
 
 /**
- * Função que adiciona um erro léxico na tela
+ * Função que adiciona um erro  na tela
  * @param {string} line - Linha na qual o Erro ocorreu
  * @param {string} text - Token
  * @param {string} description - Descrição do erro
  */
-function addLexicalError(line, text, description) {
+function addError(line, text, description) {
   var newElement = document.createElement("li");
   newElement.innerHTML = `<h3>Erro na linha ${line}: "  ${text}  "</h3><p>${description}</p>`;
   errorList.appendChild(newElement);
 }
 
 /**
- * Função que limpa todos os erros léxicos na tela
+ * Função que limpa todos os erros na tela
  */
-function clearLexicalErros() {
+function clearErros() {
   var first = errorList.firstElementChild;
   while (first) {
     first.remove();

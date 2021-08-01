@@ -1,6 +1,7 @@
-int main {
-  int x;
+int main() {
+  int x, a, b, d;
   int y;
+  int aA;
   char a = 'a';
   int vet[123];
 
@@ -8,7 +9,7 @@ int main {
     x = y;
   }
 
-  for(x = 0; x < y; x++){
+  for(x = 0; x < y; x = x + 1){
     vet[y] = 1;
   }
 
