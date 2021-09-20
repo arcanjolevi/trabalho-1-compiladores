@@ -139,17 +139,18 @@ function lexicalAnalysis(_tokens) {
  * @returns {string} - Descrição do possivel erro léxico
  */
 function describeLexicalError(token) {
+  let text = "Léxico: ";
   if (token.length > 31) {
-    return "Tamanho excessivo";
+    return text + "Tamanho excessivo";
   } else if (erTest[1].test(token)) {
-    return "Número mal formado";
+    return text + "Número mal formado";
   } else if (erTest[0].test(token)) {
-    return "Identificador mal formado";
+    return text + "Identificador mal formado";
   } else if (erTest[2].test(token)) {
-    return "Caracter mal formado";
+    return text + "Caracter mal formado";
   } else if (erTest[3].test(token)) {
-    return "String mal formada";
+    return text + "String mal formada";
   } else {
-    return "Símbolo desconhecido";
+    return text + "Símbolo desconhecido";
   }
 }

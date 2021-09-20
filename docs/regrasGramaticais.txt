@@ -1,36 +1,42 @@
-<S>             ::= <TYPE> <ID> <S0>
-<S0>            ::= <ATR'> | <FUNCTION'>
-<DECLARATION>   ::= <TYPE> <ATR> <DECLARATION'>
-<DECLARATION'>  ::= <A9> <D0> | <A7>
-<D0>            ::= <ATR> <DECLARATION'>
-<ATR>           ::= <ID> <ATR'>
-<ATR'>          ::= [ <W0> ] <ATR''> | <ATR''> | λ
-<W0>            ::= number | <ID>
-<ATR''>         ::= <A8> <ATR'''> | <A1> <ATR> λ
-<ATR'''>        ::= <ATR> | <VALUE>
-<A7>            ::= ;
-<A8>            ::= =
-<A9>            ::= ,
-<ID>            ::= id
-<TYPE>          ::= int | float | double | char | void
+<S>             ::= <TYPE> <IDENTIFIER> <S0> <S> | λ
+<S0>            ::= ; <S0_> | <FUNCTION_>
+<DECLARATION>   ::= <TYPE> <IDENTIFIER> <DECLARATION_>
+<DECLARATION_>  ::= ; | , <IDENTIFIER> <DECLARATION_>
+<IDENTIFIER>    ::= id
+<TYPE>          ::= int | float | char | void
 <VALUE>         ::= numero | decimal | string | caracter
-<FUNCTION>      ::= <TYPE> <ID> <FUNCTION'>
-<FUNCTION'>     ::= ( <F0> ) { <EXPR> }
-<F0>            ::= <TYPE> <ID> <F1> | λ
-<F1>            ::= <A9> <F0> | [ <F2> ] | λ
+<FUNCTION>      ::= <TYPE> <IDENTIFIER> <FUNCTION_>
+<FUNCTION_>     ::= ( <F0> ) <STATEMENT>
+<F0>            ::= <TYPE> <IDENTIFIER> <F1> | λ
+<F1>            ::= , <F0> | [ <F2> ] | λ
 <F2>            ::= numero | λ
-<WHILE>         ::= while ( <CALC> ) { <EXPR>  }
-<IF>            ::= if ( <CALC> ) { <EXPR> } <ELSE>
-<ELSE>          ::= else { <EXPR> } | λ 
-<FOR>           ::= for ( <R0> ; <R2> ; <R0> ) { <EXPRE> }
-<R0>            ::= <ATR> <R1> | λ
-<R1>            ::= <A9> <R0> | λ
-<R2>            ::= <CALC> | λ
-<CALC>          ::= <A2> <A0>
-<A0>            ::= <A1> <A2> <A0> | λ
-<A1>            ::= + | - | * | / | < | > | = | &
-<A2>            ::= <VALUE> | <ID> | λ
-<EXPR>          ::= <E0> <EXPR> | λ
-<E0>            ::= <DECLARATION> | <ATR> <A7> | <IF> | <WHILE> | <FOR> | <RETURN>
-<RETURN>        ::= return <CALC> <A7>
+<ITERATION>     ::= while ( <EXPRESION> ) <STATETMENT> | for ( <ITERATION_>  ; <ITERATION_>  ; <ITERATION_>  ) <STATEMENT>
+<FOR_>          ::= ; 
+<SELECTION>     ::= if ( <EXPRESION> ) <STATEMENT> <ELSE>
+<ELSE>          ::= else <STATEMENT> | λ 
+<OPERATOR>      ::= + | - | * | / | < | > | = | &
+<STATEMENT__>   ::= <SELECTION> | <ITERATION> | <EXPRESION> ; | <RETURN>
+<RETURN>        ::= return <ITERATION_> ;
+<S0_>           ::= <S> | λ
+<ASSIGNMENT>    ::= <PRIMARY> <ASSIGNMENT_>
+<ASSIGNMENT_>   ::= <OPERATOR> <ASSIGNMENT> | λ
+<PRIMARY>       ::= <IDENTIFIER> | <VALUE>
+<EXPRESION>     ::= <ASSIGNMENT> <EXPRESION_>
+<EXPRESION_>    ::= , <ASSIGNMENT> <EXPRESION_> | λ
+<STATEMENT>     ::= { <STATEMENT_> }
+<STATEMENT_>    ::= <STATEMENT__> <STATEMENT_> | <DECLARATION> <STATEMENT_> | λ
+<ITERATION_>    ::= <EXPRESION> | λ
+
+
+
+
+
+
+
+
+
+
+
+
+
 

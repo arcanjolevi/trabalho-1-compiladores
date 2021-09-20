@@ -47,33 +47,36 @@ startBtn.addEventListener("click", (evt) => {
 
   ShowErrorsList(true);
 
-  if (errorsLex.length === 0) {
-    clearErros();
-    const { syntErrors, syntTree } = parser(result.tokenList);
+  clearErros();
 
-    var aux = "";
-
-    for (let j = 0; j < syntTree.length; j++) {
-      aux = aux + syntTree[j] + "\n";
-    }
-
-    writeFile("arvore", aux);
-
-    changeErrorsListTitle(`${syntErrors.length} Erros encontrados:`);
-    for (let i = 0; i < syntErrors.length; i++) {
-      addError(
-        syntErrors[i].token.line,
-        syntErrors[i].token.token,
-        syntErrors[i].description
-      );
-    }
-  } else {
-    for (let i = 0; i < errorsLex.length; i++) {
-      addError(
-        errorsLex[i].line,
-        errorsLex[i].token,
-        describeLexicalError(errorsLex[i].token)
-      );
-    }
+  for (let i = 0; i < errorsLex.length; i++) {
+    addError(
+      errorsLex[i].line,
+      errorsLex[i].token,
+      describeLexicalError(errorsLex[i].token)
+    );
   }
+
+  const { syntErrors, syntTree } = parser(result.tokenList);
+
+  var aux = "";
+
+  for (let j = 0; j < syntTree.length; j++) {
+    aux = aux + syntTree[j] + "\n";
+  }
+
+  // writeFile("arvore", aux);
+
+  changeErrorsListTitle(`${syntErrors.length} Erros encontrados:`);
+  for (let i = 0; i < syntErrors.length; i++) {
+    addError(
+      syntErrors[i].token.line,
+      syntErrors[i].token.token,
+      syntErrors[i].description
+    );
+  }
+
+  changeErrorsListTitle(
+    `${errorsLex.length + syntErrors.length} Erros encontrados:`
+  );
 });
