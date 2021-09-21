@@ -26,17 +26,3 @@
 <STATEMENT>     ::= { <STATEMENT_> }
 <STATEMENT_>    ::= <STATEMENT__> <STATEMENT_> | <DECLARATION> <STATEMENT_> | λ
 <ITERATION_>    ::= <EXPRESION> | λ
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -114,7 +114,6 @@ function separateTokens(text) {
  */
 function lexicalAnalysis(_tokens) {
   var lexicalErrors = [];
-  var simbolsTable = [];
   for (let i = 0; i < _tokens.length; i++) {
     var lexicalCorrect = false;
     let j;

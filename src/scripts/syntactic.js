@@ -2,7 +2,50 @@ var values = [];
 var symbolNumber = -1;
 var symbol;
 var syntErrors = [];
+var semanticErrors = [];
 var tree = [];
+var symbolsTable = [];
+var scope = 0;
+var currentType;
+var primaryType;
+
+function removeAllFromCurrentScope() {
+  let value = symbolsTable.filter((i) => i.scope !== scope);
+  symbolsTable = value;
+}
+
+function getTypoOfSymbol(token) {
+  return symbolsTable.find((i) => i.token === token.token).type;
+}
+
+function findIdentifierInSymbolTable(token) {
+  for (let i = 0; i < symbolsTable.length; i++) {
+    if (
+      token.token === symbolsTable[i].token &&
+      scope === symbolsTable[i].scope
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function findIdentifierInSymbolTableWithoutScope(token) {
+  for (let i = 0; i < symbolsTable.length; i++) {
+    if (token.token === symbolsTable[i].token) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function insertSymbol(token, type) {
+  symbolsTable.push({
+    ...token,
+    type,
+    scope,
+  });
+}
 
 function initSynt() {
   values = [];
@@ -18,7 +61,7 @@ function initSynt() {
  * @param {string} text
  */
 function addSyntacticError(symbol, text) {
-  console.log("Line: " + symbol.line + " " + text);
+  //console.log("Line: " + symbol.line + " " + text);
   syntErrors.push({
     token: symbol,
     description:
@@ -27,6 +70,19 @@ function addSyntacticError(symbol, text) {
       " em '" +
       symbol.token +
       "'",
+  });
+}
+
+/**
+ * Função que adiciona um erro semantico
+ * @param {obj} symbol
+ * @param {string} text
+ */
+function addSemanticError(symbol, text) {
+  //console.log("Line: " + symbol.line + " " + text);
+  semanticErrors.push({
+    token: symbol,
+    description: "Semântico: " + text,
   });
 }
 
@@ -68,7 +124,15 @@ function firstContainsSimbol(notTerminal) {
 function S() {
   if (firstContainsSimbol("S")) {
     tree.push("S ::= <TYPE> <ID> <S0>");
+
     TYPE();
+
+    if (findIdentifierInSymbolTable(symbol)) {
+      addSemanticError(symbol, "Identificador já existente");
+    } else {
+      insertSymbol(symbol, currentType);
+    }
+
     IDENTIFIER();
     S0();
     S();
@@ -98,7 +162,15 @@ function S0() {
  */
 function DECLARATION() {
   tree.push("<DECLARATION> ::= <TYPE> <IDENTIFIER> <DECLARATION_>");
+
   TYPE();
+
+  if (findIdentifierInSymbolTable(symbol)) {
+    addSemanticError(symbol, "Identificador já existente");
+  } else {
+    insertSymbol(symbol, currentType);
+  }
+
   IDENTIFIER();
   DECLARATION_();
 }
@@ -113,6 +185,13 @@ function DECLARATION_() {
   } else if (symbol.tokenClass === "coma") {
     tree.push("<DECLARATION_> ::= , <IDENTIFIER> <DECLARATION_>");
     getNextSimbol();
+
+    if (findIdentifierInSymbolTable(symbol)) {
+      addSemanticError(symbol, "Identificador já existente");
+    } else {
+      insertSymbol(symbol, currentType);
+    }
+
     IDENTIFIER();
     DECLARATION_();
   } else {
@@ -129,7 +208,9 @@ function DECLARATION_() {
 function IDENTIFIER() {
   if (symbol.tokenClass === "id") {
     tree.push("<IDENTIFIER> ::= id");
+    let returnType = getTypoOfSymbol(symbol);
     getNextSimbol();
+    return returnType;
   } else {
     addSyntacticError(
       symbol,
@@ -149,6 +230,7 @@ function TYPE() {
     symbol.tokenClass === "void"
   ) {
     tree.push("<TYPE> ::= " + symbol.tokenClass);
+    currentType = symbol.tokenClass;
     getNextSimbol();
   } else {
     addSyntacticError(
@@ -169,7 +251,19 @@ function VALUE() {
     symbol.tokenClass === "character"
   ) {
     tree.push("VALUE ::= " + symbol.tokenClass);
+    let returnType;
+
+    if (symbol.tokenClass === "number") {
+      returnType = "int";
+    } else if (symbol.tokenClass === "decimal") {
+      returnType = "float";
+    } else if (symbol.tokenClass === "string") {
+      returnType = "char";
+    } else {
+      returnType = "char";
+    }
     getNextSimbol();
+    return returnType;
   } else {
     addSyntacticError(symbol, "[VALUE] Erro sintático + expected um valor");
   }
@@ -196,6 +290,8 @@ function FUNCTION_() {
     addSyntacticError(symbol, "[FUNCTION_ 0] Erro sintático + expected um '('");
   }
 
+  scope++;
+
   F0();
 
   if (symbol.tokenClass === "closeParentheses") {
@@ -214,6 +310,13 @@ function F0() {
   if (firstContainsSimbol("TYPE")) {
     tree.push("<F0> ::= <TYPE> <IDENTIFIER> <F1>");
     TYPE();
+
+    if (findIdentifierInSymbolTable(symbol)) {
+      addSemanticError(symbol, "Identificador já existente");
+    } else {
+      insertSymbol(symbol, currentType);
+    }
+
     IDENTIFIER();
     F1();
   } else {
@@ -283,12 +386,16 @@ function ITERATION() {
       );
     }
 
+    scope++;
+
     STATEMENT();
   } else if (symbol.tokenClass === "for") {
     tree.push(
       "<ITERATION> ::= for ( <ITERATION_>  ; <ITERATION_>  ; <ITERATION_> ) <STATEMENT>"
     );
     getNextSimbol();
+
+    scope++;
 
     if (symbol.tokenClass === "openParentheses") {
       getNextSimbol();
@@ -344,6 +451,8 @@ function SELECTION() {
     tree.push("<SELECTION> ::= if ( <EXPRESION> ) <STATEMENT> <ELSE>");
     getNextSimbol();
 
+    scope++;
+
     if (symbol.tokenClass === "openParentheses") {
       getNextSimbol();
     } else {
@@ -377,6 +486,8 @@ function ELSE() {
   if (symbol.tokenClass === "else") {
     tree.push("<ELSE> ::= else <STATEMENT>");
     getNextSimbol();
+
+    scope++;
     STATEMENT();
   } else {
     tree.push("<ELSE> ::= λ");
@@ -467,8 +578,23 @@ function S0_() {
  */
 function ASSIGNMENT() {
   tree.push("<ASSIGNMENT>  ::= <PRIMARY> <ASSIGNMENT_>");
-  PRIMARY();
-  ASSIGNMENT_();
+
+  let symbolAux = symbol;
+  let type1 = PRIMARY();
+  let type2 = ASSIGNMENT_();
+
+  if (type2 === "λ") {
+    return type1;
+  }
+
+  if (type1 !== type2) {
+    addSemanticError(
+      symbolAux,
+      "Divergência de tipos entre " + type1 + " e " + type2
+    );
+  } else {
+    return type1;
+  }
 }
 
 /**
@@ -477,10 +603,11 @@ function ASSIGNMENT() {
 function ASSIGNMENT_() {
   if (firstContainsSimbol("OPERATOR")) {
     tree.push("<ASSIGNMENT_> ::= <OPERATOR> <ASSIGNMENT>");
-    getNextSimbol();
-    ASSIGNMENT();
+    OPERATOR();
+    return ASSIGNMENT();
   } else {
     tree.push("<ASSIGNMENT_> ::= λ");
+    return "λ";
   }
 }
 
@@ -488,18 +615,27 @@ function ASSIGNMENT_() {
  * Função que representa uma regra gramatical
  */
 function PRIMARY() {
+  let typeReturn;
+
   if (firstContainsSimbol("IDENTIFIER")) {
     tree.push("<PRIMARY> ::= <IDENTIFIER> ");
-    IDENTIFIER();
+
+    if (!findIdentifierInSymbolTableWithoutScope(symbol)) {
+      addSemanticError(symbol, "Identificador Inexistente");
+    }
+
+    typeReturn = IDENTIFIER();
   } else if (firstContainsSimbol("VALUE")) {
     tree.push("<PRIMARY> ::= <VALUE>");
-    VALUE();
+    typeReturn = VALUE();
   } else {
     addSyntacticError(
       symbol,
       "[PRIMARY] Erro sintático + expected um 'identificador' ou 'valor'"
     );
   }
+
+  return typeReturn;
 }
 
 /**
@@ -545,6 +681,10 @@ function STATEMENT() {
   } else {
     addSyntacticError(symbol, "[STATEMENT 0] Erro sintático + expected um '}'");
   }
+
+  removeAllFromCurrentScope();
+
+  scope--;
 }
 
 /**
@@ -586,5 +726,5 @@ function parser(tokenList) {
   values = tokenList;
   getNextSimbol("");
   S();
-  return { syntErrors, syntTree: tree };
+  return { syntErrors, syntTree: tree, semanticErrors };
 }

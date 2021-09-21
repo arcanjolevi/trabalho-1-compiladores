@@ -1,20 +1,47 @@
-int main() {
-  int 9x, a, b, d;
+
+void f(){
+  int 9;
+
+}
+
+float funct(int , int b){
+
+}
+
+
+
+
+int main(int w) {
+  int x, b, d;
   int y;
   char a;
+  float e;
+
+  e = x;
 
 
-  if (1 > 2) {
+  a = x = y;
+
+
+  if (x > 3.2) {
     x = y;
+    int x;
   }
 
   for(x = 0; x < y; x = x + 1){
     y = 1;
+    int x;
   }
 
   while(2 > 3){
     x = y + 1;
+    int x;
   }
+
+  int w;
+
+
+
 
   return 0;
 }

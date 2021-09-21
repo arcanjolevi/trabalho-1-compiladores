@@ -57,7 +57,7 @@ startBtn.addEventListener("click", (evt) => {
     );
   }
 
-  const { syntErrors, syntTree } = parser(result.tokenList);
+  const { syntErrors, syntTree, semanticErrors } = parser(result.tokenList);
 
   var aux = "";
 
@@ -67,7 +67,6 @@ startBtn.addEventListener("click", (evt) => {
 
   // writeFile("arvore", aux);
 
-  changeErrorsListTitle(`${syntErrors.length} Erros encontrados:`);
   for (let i = 0; i < syntErrors.length; i++) {
     addError(
       syntErrors[i].token.line,
@@ -76,7 +75,17 @@ startBtn.addEventListener("click", (evt) => {
     );
   }
 
+  for (let i = 0; i < semanticErrors.length; i++) {
+    addError(
+      semanticErrors[i].token.line,
+      semanticErrors[i].token.token,
+      semanticErrors[i].description
+    );
+  }
+
   changeErrorsListTitle(
-    `${errorsLex.length + syntErrors.length} Erros encontrados:`
+    `${
+      errorsLex.length + syntErrors.length + semanticErrors.length
+    } Erros encontrados:`
   );
 });
