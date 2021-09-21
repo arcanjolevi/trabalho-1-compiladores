@@ -1,23 +1,39 @@
 
 void f(){
+  int x;
+}
+
+float funct(int a, int b){
 
 }
 
+
 int main() {
-  int x, a, b, d;
+  int x, a, b;
   int y;
-  char a;
+  char c;
+  float e;
+
+  x = 1.a1;
+  x = x + 1;
+  x = a + b;
+
+  c = 'a;
+
+  a = x = y;
 
 
-  if (1) {
+  if (x > 3) {
     x = y;
+    int b;
   }
 
-  for(x = x; x < y; x = x + 1){
+  for(x = 0; x < y; x = x + 1){
     y = 1;
+    int x;
   }
 
-  while(2 , 3){
+  while(2 > 3){
     x = y + 1;
   }
 

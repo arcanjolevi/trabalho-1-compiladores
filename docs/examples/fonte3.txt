@@ -12,17 +12,18 @@ int main() {
   int x, a, b;
   int y;
   char c;
-  float e;
+  float e
 
-  x = 1;
+  x = 1.a1;
   x = x + 1;
   x = a + b;
 
+  c = 'a;
 
   a = x = y;
 
 
-  if (x > 3) {
+  if (x  3) {
     x = y;
     int b;
   }

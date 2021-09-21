@@ -15,7 +15,9 @@ function removeAllFromCurrentScope() {
 }
 
 function getTypoOfSymbol(token) {
-  return symbolsTable.find((i) => i.token === token.token).type;
+  let val = symbolsTable.find((i) => i.token === token.token);
+
+  return val ? val.type : "";
 }
 
 function findIdentifierInSymbolTable(token) {
@@ -123,12 +125,12 @@ function firstContainsSimbol(notTerminal) {
  */
 function S() {
   if (firstContainsSimbol("S")) {
-    tree.push("S ::= <TYPE> <ID> <S0>");
+    tree.push("<S> ::= <TYPE> <ID> <S0>");
 
     TYPE();
 
     if (findIdentifierInSymbolTable(symbol)) {
-      addSemanticError(symbol, "Identificador já existente");
+      addSemanticError(symbol, "Identificador já declarado");
     } else {
       insertSymbol(symbol, currentType);
     }
@@ -166,7 +168,7 @@ function DECLARATION() {
   TYPE();
 
   if (findIdentifierInSymbolTable(symbol)) {
-    addSemanticError(symbol, "Identificador já existente");
+    addSemanticError(symbol, "Identificador já declarado");
   } else {
     insertSymbol(symbol, currentType);
   }
@@ -187,7 +189,7 @@ function DECLARATION_() {
     getNextSimbol();
 
     if (findIdentifierInSymbolTable(symbol)) {
-      addSemanticError(symbol, "Identificador já existente");
+      addSemanticError(symbol, "Identificador já declarado");
     } else {
       insertSymbol(symbol, currentType);
     }
@@ -250,17 +252,20 @@ function VALUE() {
     symbol.tokenClass === "string" ||
     symbol.tokenClass === "character"
   ) {
-    tree.push("VALUE ::= " + symbol.tokenClass);
+    tree.push("<VALUE> ::= " + symbol.tokenClass);
     let returnType;
 
     if (symbol.tokenClass === "number") {
       returnType = "int";
     } else if (symbol.tokenClass === "decimal") {
       returnType = "float";
-    } else if (symbol.tokenClass === "string") {
+    } else if (
+      symbol.tokenClass === "string" ||
+      symbol.tokenClass === "character"
+    ) {
       returnType = "char";
     } else {
-      returnType = "char";
+      returnType = "void";
     }
     getNextSimbol();
     return returnType;
@@ -284,7 +289,7 @@ function FUNCTION() {
  */
 function FUNCTION_() {
   if (symbol.tokenClass === "openParentheses") {
-    tree.push("FUNCTION_ ::= ( <F0> ) <STATEMENT>");
+    tree.push("<FUNCTION_> ::= ( <F0> ) <STATEMENT>");
     getNextSimbol();
   } else {
     addSyntacticError(symbol, "[FUNCTION_ 0] Erro sintático + expected um '('");
@@ -312,7 +317,7 @@ function F0() {
     TYPE();
 
     if (findIdentifierInSymbolTable(symbol)) {
-      addSemanticError(symbol, "Identificador já existente");
+      addSemanticError(symbol, "Identificador já declarado");
     } else {
       insertSymbol(symbol, currentType);
     }
@@ -320,7 +325,7 @@ function F0() {
     IDENTIFIER();
     F1();
   } else {
-    tree.push("F0 ::= λ");
+    tree.push("<F0> ::= λ");
   }
 }
 
@@ -621,7 +626,7 @@ function PRIMARY() {
     tree.push("<PRIMARY> ::= <IDENTIFIER> ");
 
     if (!findIdentifierInSymbolTableWithoutScope(symbol)) {
-      addSemanticError(symbol, "Identificador Inexistente");
+      addSemanticError(symbol, "Identificador não declarado");
     }
 
     typeReturn = IDENTIFIER();
@@ -648,7 +653,7 @@ function EXPRESION() {
 }
 
 /**
- * Função que representa uma regra gramatical
+ * Função que representa uma regra gramatical EXPRESION_
  */
 function EXPRESION_() {
   if (symbol.tokenClass === "coma") {
@@ -722,6 +727,14 @@ function ITERATION_() {
  * Função que representa o inicio da analise sintática
  */
 function parser(tokenList) {
+  values = [];
+  symbolNumber = -1;
+  symbol;
+  syntErrors = [];
+  semanticErrors = [];
+  tree = [];
+  symbolsTable = [];
+  scope = 0;
   initSynt();
   values = tokenList;
   getNextSimbol("");

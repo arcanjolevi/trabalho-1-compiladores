@@ -11,7 +11,6 @@
 <F1>            ::= , <F0> | [ <F2> ] | λ
 <F2>            ::= numero | λ
 <ITERATION>     ::= while ( <EXPRESION> ) <STATETMENT> | for ( <ITERATION_>  ; <ITERATION_>  ; <ITERATION_>  ) <STATEMENT>
-<FOR_>          ::= ; 
 <SELECTION>     ::= if ( <EXPRESION> ) <STATEMENT> <ELSE>
 <ELSE>          ::= else <STATEMENT> | λ 
 <OPERATOR>      ::= + | - | * | / | < | > | = | &

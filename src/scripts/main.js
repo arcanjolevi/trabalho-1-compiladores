@@ -65,8 +65,6 @@ startBtn.addEventListener("click", (evt) => {
     aux = aux + syntTree[j] + "\n";
   }
 
-  // writeFile("arvore", aux);
-
   for (let i = 0; i < syntErrors.length; i++) {
     addError(
       syntErrors[i].token.line,
@@ -88,4 +86,8 @@ startBtn.addEventListener("click", (evt) => {
       errorsLex.length + syntErrors.length + semanticErrors.length
     } Erros encontrados:`
   );
+
+  if (errorsLex.length + syntErrors.length + semanticErrors.length == 0) {
+    writeFile("arvore", aux);
+  }
 });
