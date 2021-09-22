@@ -125,7 +125,7 @@ function firstContainsSimbol(notTerminal) {
  */
 function S() {
   if (firstContainsSimbol("S")) {
-    tree.push("<S> ::= <TYPE> <ID> <S0>");
+    tree.push("<S> ::= <TYPE> <IDENTIFIER> <S0>");
 
     TYPE();
 
